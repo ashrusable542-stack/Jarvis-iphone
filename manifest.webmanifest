@@ -1,25 +1,21 @@
 {
-  "name": "JARVIS Personal Assistant",
+  "name": "JARVIS Advanced",
   "short_name": "JARVIS",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#030918",
-  "theme_color": "#030918",
-  "description": "A multilingual personal assistant for iPhone.",
+  "background_color": "#020916",
+  "theme_color": "#04152d",
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "assets/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "assets/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     }
   ]
 }

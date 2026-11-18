@@ -1,66 +1,27 @@
-# JARVIS iPhone Standalone v1.0
+# JARVIS Advanced – iPhone 17
 
-This is a Progressive Web App (PWA) for iPhone 17. It can be added to the Home Screen and launched in a standalone app-like window.
+A local-first, installable PWA with a blue HUD, browser speech synthesis, optional speech recognition, local notes, and simple offline commands.
 
-## What works in this free starter
+## Deploy to GitHub Pages
+Upload the contents of this folder to the **root** of your existing `Jarvis-iphone` repository. Keep `assets/` as a folder. Commit to `main`. In Settings → Pages choose Deploy from a branch → `main` → `/(root)`. The site URL should be `https://YOUR-USERNAME.github.io/Jarvis-iphone/`.
 
-- Blue holographic JARVIS dashboard.
-- English, Hindi and Marathi response-language selection.
-- Spoken replies using iOS browser speech synthesis where available.
-- iPhone keyboard dictation (tap the microphone on the iOS keyboard).
-- Local notes stored in this browser on this iPhone, with export and delete.
-- Basic built-in commands: time, date, study plan, daily plan, simple arithmetic, and note saving.
-- 5-minute and 25-minute timers while the page remains active.
-- Offline dashboard shell after the first successful visit.
+## Install on iPhone
+Open the published URL in Safari → Share → Add to Home Screen → enable Open as Web App → Add. Apple instructions: https://support.apple.com/guide/iphone/turn-a-website-into-an-app-in-safari-iph8e5236/ios
 
-## Important AI limitation
+## Siri activation
+Create a Shortcut named **JARVIS**:
+1. Add **Dictate Text** (language: choose your preferred language; stop listening: After Pause).
+2. Add **URL Encode** and pass the Dictated Text variable.
+3. Add **URL** with this base address, then append `?q=` and the encoded text: `https://YOUR-USERNAME.github.io/Jarvis-iphone/`
+4. Add **Open URLs**.
+5. Name the shortcut exactly `JARVIS`.
 
-This standalone package does not contain a full language model. It provides local/basic assistant functions and an **Ask ChatGPT** handoff. That handoff uses the ChatGPT service and requires internet access and whatever account/usage limits apply. A ChatGPT subscription is not the same as API access. Do not paste API keys into this static app.
+Then say **“Hey Siri, JARVIS”**, dictate your request when prompted, and the JARVIS page opens with that request. Siri may ask for permission the first time. If Shortcuts does not expose URL Encode as an action on your iOS version, use the URL action and insert the Dictated Text variable; test with a short phrase.
 
-## Publish it free with GitHub Pages
-
-PWA installation and service workers require HTTPS (or localhost). A local `file://` copy will not install as a PWA.
-
-1. On a computer or iPhone browser, sign in or create a GitHub account at https://github.com/.
-2. Create a new public repository named `jarvis-iphone`.
-3. Upload the contents of this folder (index.html, manifest.webmanifest, sw.js, and icons folder) to the repository root.
-4. In the repository, open **Settings → Pages**.
-5. Under Build and deployment, select **Deploy from a branch**, choose `main` and `/ (root)`, then Save.
-6. Wait for GitHub Pages to publish. Your URL will look like `https://YOUR-USERNAME.github.io/jarvis-iphone/`.
-
-GitHub's interface may change. Follow its Pages publishing instructions if labels differ.
-
-## Install on iPhone 17
-
-1. Open the published HTTPS URL in **Safari** (not an in-app browser).
-2. Tap the Share button.
-3. Scroll and choose **Add to Home Screen**.
-4. If shown, enable **Open as Web App**.
-5. Tap Add. Launch JARVIS from the new Home Screen icon.
-
-## Use voice
-
-- For reliable iPhone dictation, tap the command box, then tap the microphone on the iOS keyboard.
-- Tap TRANSMIT to get a local response.
-- Spoken output uses the browser's speech synthesis voices. Available Hindi and Marathi voices depend on iOS version and downloaded system voices.
-- Safari's web speech recognition support is inconsistent. The app intentionally falls back to iOS keyboard dictation.
-- It cannot listen continuously for “Hey JARVIS” in the background.
-
-## Privacy and data
-
-- Notes are stored in local browser storage on this device. Export notes periodically.
-- Do not save passwords, payment information, or sensitive personal data.
-- No app server is included; the app is static. Ask ChatGPT opens an external service.
-- Deleting Safari website data may delete local notes.
-- Timers may pause or be suspended if iOS backgrounds or closes the web app. Use the iPhone Clock app for critical alarms.
-
-## iPhone automation limits
-
-A web app cannot freely open arbitrary apps, read messages, create reminders, toggle system settings, or execute actions in the background. For those tasks, create Apple Shortcuts and invoke them with Siri or use supported iOS share/open flows. This app's “Open Shortcuts” button opens the Shortcuts app URL scheme where supported; it does not execute arbitrary shortcuts.
-
-## Files
-
-- `index.html` — app interface and logic
-- `manifest.webmanifest` — install metadata
-- `sw.js` — offline caching
-- `icons/` — app icons
+## What it can and cannot do
+- Works locally for time/date, simple planning prompts, local notes, and its interface.
+- Uses iOS speech synthesis; speech recognition support varies by browser/device. Siri dictation is the reliable fallback.
+- This starter does **not** contain a private LLM or cloud AI key. Use the AI chat tile to open ChatGPT for open-ended answers.
+- A PWA cannot run a custom always-listening wake word or freely control iOS settings/other apps. Siri invokes the named Shortcut, and iOS permission prompts remain in place.
+- Notes are stored in this browser's local storage. Clearing website data can erase them.
+- No API keys, trackers, or remote backend are included.
