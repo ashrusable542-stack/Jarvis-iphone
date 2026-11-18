@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#030918">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="JARVIS">
+<meta name="description" content="A personal multilingual JARVIS assistant for iPhone.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>JARVIS — Personal AI</title>
+<style>
+:root{color-scheme:dark;--bg:#030918;--panel:rgba(7,25,52,.78);--line:rgba(65,190,255,.34);--cyan:#6de5ff;--blue:#258cff;--text:#e1f7ff;--muted:#8db6cf;--good:#74f2c2;--shadow:0 0 28px rgba(28,151,255,.19)}
+*{box-sizing:border-box}html{min-height:100%;background:var(--bg)}body{margin:0;min-height:100vh;min-height:100dvh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);background:radial-gradient(ellipse at 50% -10%,#174779 0,#0a1d39 32%,#030918 75%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.17;background-image:linear-gradient(rgba(75,183,255,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(75,183,255,.15) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(#000,transparent 85%)}
+button,input,textarea,select{font:inherit}button{touch-action:manipulation}
+.app{max-width:760px;margin:auto;padding:15px 14px 36px;position:relative}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 3px 15px}
+.brand{font-size:10px;letter-spacing:.23em;color:var(--cyan);font-weight:700}.live{border:1px solid #277b79;border-radius:30px;padding:6px 10px;color:var(--good);font-size:10px;letter-spacing:.12em}
+.hero{text-align:center;padding:8px 0 18px}.orb{width:158px;height:158px;margin:0 auto 17px;position:relative;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,#1a72b3 0,#0b2c51 43%,#041225 72%);border:1px solid #62dfff;box-shadow:0 0 24px #168bce,inset 0 0 28px #168bce88;animation:glow 3.8s ease-in-out infinite}
+.orb:before,.orb:after{content:"";position:absolute;inset:-10px;border-radius:50%;border:1px dashed #62dfff99;animation:spin 22s linear infinite}.orb:after{inset:-20px;border-color:#258cff77;animation-direction:reverse;animation-duration:31s}
+.orb-core{font-size:22px;letter-spacing:.14em;font-weight:300;text-shadow:0 0 16px var(--cyan)}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes glow{50%{box-shadow:0 0 43px #168bce,inset 0 0 40px #168bceaa}}
+h1{font-size:30px;letter-spacing:.23em;font-weight:300;margin:0 0 6px}.tag{font-size:10px;letter-spacing:.13em;color:var(--muted)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px;margin:12px 0;box-shadow:var(--shadow);backdrop-filter:blur(12px)}
+.panel-title{font-size:10px;letter-spacing:.17em;color:var(--cyan);margin-bottom:11px;font-weight:700}
+label{font-size:11px;color:var(--muted);display:block;margin-bottom:6px}
+textarea,input,select{width:100%;border:1px solid #24577d;background:#031328;color:var(--text);border-radius:11px;padding:12px;outline:none}
+textarea{min-height:82px;resize:vertical;line-height:1.45}
+button{border:1px solid #50cfff;background:linear-gradient(135deg,#126dc1,#073b75);color:white;border-radius:11px;padding:11px 13px;font-weight:650;cursor:pointer;box-shadow:0 0 14px #168bd533}
+button.secondary{background:#071a31;border-color:#285c80;color:#c6efff}button.ghost{background:transparent;border-color:#285c80;color:#bdeaff}button:disabled{opacity:.5}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.row{display:flex;gap:9px;align-items:center}.row>*{min-width:0;flex:1}
+.log{display:flex;flex-direction:column;gap:9px;max-height:340px;overflow:auto;min-height:68px}
+.bubble{max-width:94%;padding:10px 12px;border-radius:13px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.48}
+.bot{align-self:flex-start;background:#071b31;border:1px solid #1d5b83}.user{align-self:flex-end;background:#0d4777;border:1px solid #299cdb}
+.mini{font-size:10px;color:var(--muted);line-height:1.5}.statusline{font-size:11px;color:var(--muted);margin-top:8px;min-height:16px}
+.note{padding:10px;border:1px solid #1b5279;border-radius:10px;margin:7px 0;background:#06182b;white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}
+.note button{padding:6px 9px;font-size:11px;margin-top:8px}
+.footer{text-align:center;color:#628ba7;font-size:9px;letter-spacing:.1em;padding:18px 0 8px}
+.install-tip{font-size:12px;color:#c4eaff;line-height:1.5}.hidden{display:none!important}
+@media(min-width:650px){.app{padding-top:25px}.orb{width:180px;height:180px}}
+</style>
+</head>
+<body>
+<main class="app">
+<header><div class="brand">STARK INDUSTRIES // PERSONAL SYSTEM</div><div class="live" id="live">● LOCAL READY</div></header>
+<section class="hero">
+ <div class="orb"><div class="orb-core">J.A.R.V.I.S</div></div>
+ <h1>JARVIS</h1><div class="tag">PERSONAL MULTILINGUAL ASSISTANT</div>
+</section>
+
+<section class="panel">
+ <div class="panel-title">SYSTEM SETTINGS</div>
+ <div class="grid2">
+  <div><label for="language">RESPONSE LANGUAGE</label><select id="language"><option value="auto">Auto detect</option><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option></select></div>
+  <div><label for="voice">VOICE RESPONSE</label><select id="voice"><option value="on">Enabled</option><option value="off">Disabled</option></select></div>
+ </div>
+ <div class="mini" style="margin-top:9px">Your notes and settings stay in this browser on this iPhone. Voice availability depends on iOS and installed system voices.</div>
+</section>
+
+<section class="panel">
+ <div class="panel-title">VOICE / TEXT COMMUNICATION</div>
+ <div class="log" id="log" aria-live="polite"><div class="bubble bot">JARVIS online. नमस्कार! Hello. Ask me for a plan, a calculation, a timer, or help with your day.</div></div>
+ <label for="message" style="margin-top:12px">YOUR COMMAND</label>
+ <textarea id="message" placeholder="Speak or type in English, Hindi or Marathi..."></textarea>
+ <div class="grid2" style="margin-top:9px">
+  <button id="send">TRANSMIT</button><button class="secondary" id="dictate">🎙 DICTATE</button>
+  <button class="secondary" id="speakLast">🔊 REPEAT LAST</button><button class="ghost" id="clearChat">CLEAR CHAT</button>
+ </div>
+ <div class="statusline" id="voiceStatus">On iPhone, use the microphone on the iOS keyboard if Dictate is unavailable.</div>
+</section>
+
+<section class="panel">
+ <div class="panel-title">PERSONAL MEMORY // LOCAL NOTES</div>
+ <label for="noteText">SAVE A NOTE</label>
+ <textarea id="noteText" placeholder="Tell JARVIS what to remember on this device..."></textarea>
+ <div class="row" style="margin-top:8px"><button id="saveNote">SAVE NOTE</button><button class="secondary" id="exportNotes">EXPORT NOTES</button></div>
+ <div id="notesList" style="margin-top:9px"></div>
+ <div class="mini">Notes are stored locally in this browser. Clearing website data can erase them; export a backup if important.</div>
+</section>
+
+<section class="panel">
+ <div class="panel-title">QUICK AUTOMATIONS</div>
+ <div class="grid2">
+  <button class="secondary" id="timer5">⏱ 5-MIN TIMER</button>
+  <button class="secondary" id="timer25">📚 25-MIN FOCUS</button>
+  <button class="secondary" id="studyPlan">STUDY PLAN</button>
+  <button class="secondary" id="dailyPlan">DAILY PLAN</button>
+  <button class="secondary" id="calc">CALCULATOR</button>
+  <button class="secondary" id="askAI">ASK CHATGPT</button>
+ </div>
+ <div class="statusline" id="timerStatus">Timers run while this page remains active; iOS may suspend background web timers.</div>
+</section>
+
+<section class="panel">
+ <div class="panel-title">IPHONE AUTOMATION</div>
+ <p class="install-tip">JARVIS can open supported iPhone destinations and prepare actions, but iOS requires confirmation or a Shortcut for protected actions such as sending messages, creating Reminders, or changing system settings.</p>
+ <div class="grid2">
+  <button class="ghost" id="openShortcuts">OPEN SHORTCUTS</button>
+  <button class="ghost" id="openSettings">OPEN SETTINGS</button>
+ </div>
+ <p class="mini">For hands-free launch, add a Siri Shortcut named “JARVIS” that opens this Home Screen web app. A custom always-listening wake word is not available to ordinary web apps on iOS.</p>
+</section>
+<footer class="footer">JARVIS v1.0 // IPHONE STANDALONE EDITION</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let lastReply="",timerId=null;
+const NOTES_KEY="jarvis_iphone_notes_v1";
+function lang(){return $("language").value}
+function addBubble(t,who){const d=document.createElement("div");d.className="bubble "+who;d.textContent=t;$("log").appendChild(d);$("log").scrollTop=$("log").scrollHeight}
+function speak(text){if($("voice").value==="off"||!("speechSynthesis"in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);const l=lang();u.lang=l==="hi"?"hi-IN":l==="mr"?"mr-IN":"en-IN";speechSynthesis.speak(u)}
+function detectLang(s){if(lang()!=="auto")return lang();if(/[\u0900-\u097F]/.test(s))return "hi";return "en"}
+function localReply(raw){
+ const s=raw.trim(), low=s.toLowerCase(), l=detectLang(s);
+ const isHi=l==="hi", isMr=l==="mr";
+ if(/^(help|commands|what can you do|मदद|मदत)/i.test(s))return isHi?"मैं नोट्स सहेज सकता हूँ, समय बता सकता हूँ, टाइमर चला सकता हूँ, पढ़ाई और दिन की योजना बना सकता हूँ। सामान्य AI सवालों के लिए Ask ChatGPT चुनें।":isMr?"मी नोट्स जतन करू शकतो, वेळ सांगू शकतो, टाइमर आणि अभ्यास/दिवसाचे नियोजन करू शकतो. सामान्य AI प्रश्नांसाठी Ask ChatGPT निवडा.":"I can save notes, tell the time, run timers, and help create study or daily plans. For general AI questions, use Ask ChatGPT.";
+ if(/time|समय|वेळ/.test(low)||/कितने बजे/.test(s)){return (isHi?"अभी समय है: ":isMr?"आत्ताची वेळ: ":"The current time is ")+new Date().toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});}
+ if(/date|तारीख|दिनांक|आज कौन सा दिन/.test(low)){return (isHi?"आज की तारीख: ":isMr?"आजची तारीख: ":"Today's date is ")+new Date().toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"});}
+ if(/study plan|अभ्यास.*योजना|पढ़ाई.*प्लान|अभ्यासाचा प्लॅन/.test(low)){return isHi?"अध्ययन योजना:\n1. 10 मिनट पिछले पाठ की दोहराई।\n2. 40 मिनट एक कठिन विषय।\n3. 10 मिनट का ब्रेक।\n4. 30 मिनट प्रश्न हल करें।\n5. अंत में 5 मिनट मुख्य सूत्र दोहराएँ।":isMr?"अभ्यास योजना:\n1. 10 मिनिटे मागील धड्याची उजळणी.\n2. 40 मिनिटे कठीण विषय.\n3. 10 मिनिटांचा ब्रेक.\n4. 30 मिनिटे प्रश्न सोडवा.\n5. शेवटी 5 मिनिटे सूत्रांची उजळणी.":"Study plan:\n1. Review yesterday's topic for 10 minutes.\n2. Study one difficult topic for 40 minutes.\n3. Take a 10-minute break.\n4. Solve questions for 30 minutes.\n5. Revise key formulas for 5 minutes.";}
+ if(/daily plan|आज.*plan|आजचा प्लॅन|दिनचर्या|रूटीन/.test(low)){return isHi?"आज का प्लान:\n• सबसे जरूरी काम चुनें।\n• 2 फोकस सत्र पूरे करें।\n• व्यायाम और भोजन का समय रखें।\n• रात को अगले दिन की तैयारी करें।":isMr?"आजचा प्लॅन:\n• सर्वात महत्त्वाचे काम निवडा.\n• दोन फोकस सत्रे पूर्ण करा.\n• व्यायाम आणि जेवणासाठी वेळ ठेवा.\n• रात्री उद्याची तयारी करा.":"Today's plan:\n• Choose your three most important tasks.\n• Complete two focused work sessions.\n• Make time for exercise and meals.\n• Prepare tomorrow's priorities before bed.";}
+ const math=s.match(/^\s*([-+*/().\d\s]+)\s*$/);
+ if(math && /[0-9]/.test(s)){try{if(!/^[0-9+\-*/().\s]+$/.test(s))throw 0;const result=Function('"use strict";return ('+s+')')();if(Number.isFinite(result))return "Result: "+result;}catch(e){}}
+ if(/^(save note|remember|याद रख|लक्षात ठेव)/i.test(s)){const n=s.replace(/^(save note|remember|याद रख|लक्षात ठेव)[:\s]*/i,"");if(n){saveNote(n);return isHi?"नोट आपके iPhone पर सहेज दी गई।":isMr?"नोंद तुमच्या iPhone वर जतन केली.":"Note saved on this iPhone.";}}
+ return isHi?"मैंने आपका संदेश समझ लिया। सामान्य ज्ञान और जटिल सवालों के लिए Ask ChatGPT दबाएँ; यह ChatGPT खोलेगा।":isMr?"तुमचा संदेश मला समजला. सामान्य ज्ञान आणि कठीण प्रश्नांसाठी Ask ChatGPT दाबा; ChatGPT उघडेल.":"I received your message. For general knowledge and complex questions, tap Ask ChatGPT to continue with the ChatGPT service.";
+}
+function handle(){const s=$("message").value.trim();if(!s)return;addBubble(s,"user");$("message").value="";const r=localReply(s);lastReply=r;addBubble(r,"bot");speak(r);}
+$("send").onclick=handle;
+$("message").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();handle();}});
+$("speakLast").onclick=()=>{if(lastReply)speak(lastReply)};
+$("clearChat").onclick=()=>{$("log").innerHTML="";lastReply="";};
+function getNotes(){try{return JSON.parse(localStorage.getItem(NOTES_KEY)||"[]")}catch(e){return []}}
+function saveNote(text){const notes=getNotes();notes.unshift({id:Date.now(),text,created:new Date().toLocaleString()});localStorage.setItem(NOTES_KEY,JSON.stringify(notes));renderNotes();}
+function renderNotes(){const box=$("notesList");box.innerHTML="";getNotes().forEach(n=>{const d=document.createElement("div");d.className="note";const p=document.createElement("div");p.textContent=n.text;const small=document.createElement("div");small.className="mini";small.textContent=n.created;const b=document.createElement("button");b.className="ghost";b.textContent="DELETE";b.onclick=()=>{localStorage.setItem(NOTES_KEY,JSON.stringify(getNotes().filter(x=>x.id!==n.id)));renderNotes()};d.append(p,small,b);box.append(d)});if(!getNotes().length)box.innerHTML='<div class="mini">No saved notes yet.</div>';}
+$("saveNote").onclick=()=>{const t=$("noteText").value.trim();if(!t)return;saveNote(t);$("noteText").value="";$("voiceStatus").textContent="Note saved locally on this iPhone.";};
+$("exportNotes").onclick=()=>{const blob=new Blob([JSON.stringify(getNotes(),null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="jarvis-notes-backup.json";a.click();URL.revokeObjectURL(a.href)};
+function timer(minutes){if(timerId)clearInterval(timerId);let left=minutes*60;const show=()=>{const m=Math.floor(left/60),s=left%60;$("timerStatus").textContent=`Timer: ${m}:${String(s).padStart(2,"0")} remaining`;if(left<=0){clearInterval(timerId);timerId=null;$("timerStatus").textContent="Timer finished.";speak("Your timer is finished.");}left--;};show();timerId=setInterval(show,1000);}
+$("timer5").onclick=()=>timer(5);$("timer25").onclick=()=>timer(25);
+$("studyPlan").onclick=()=>{$("message").value="Give me a simple study plan.";handle()};
+$("dailyPlan").onclick=()=>{$("message").value="Give me a daily plan.";handle()};
+$("calc").onclick=()=>{const q=prompt("Enter a basic calculation, for example 125*8");if(q){$("message").value=q;handle()}};
+$("askAI").onclick=async()=>{const q=$("message").value.trim()||prompt("What would you like to ask ChatGPT?");if(!q)return;const promptText="You are JARVIS, my personal assistant. Reply in the same language as this question (English, Hindi or Marathi). Be helpful and clear.\n\n"+q;try{if(navigator.share){await navigator.share({text:promptText});}else if(navigator.clipboard){await navigator.clipboard.writeText(promptText);alert("Prompt copied. Opening ChatGPT.");window.open("https://chatgpt.com/","_blank");}}catch(e){window.open("https://chatgpt.com/","_blank");}};
+$("dictate").onclick=()=>{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$("voiceStatus").textContent="Use the microphone on the iPhone keyboard to dictate. Safari voice recognition is not available here."; $("message").focus();return;}const r=new SR();const l=lang();r.lang=l==="hi"?"hi-IN":l==="mr"?"mr-IN":"en-IN";r.interimResults=false;r.onresult=e=>$("message").value=e.results[0][0].transcript;r.onerror=e=>$("voiceStatus").textContent="Dictation unavailable: "+e.error;r.start();};
+$("openShortcuts").onclick=()=>window.location.href="shortcuts://";
+$("openSettings").onclick=()=>{alert("Open iPhone Settings manually. iOS does not allow this web app to navigate to every Settings page.");};
+if("serviceWorker"in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}
+renderNotes();
+</script>
+</body></html>

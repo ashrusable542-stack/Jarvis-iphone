@@ -1,0 +1,11 @@
+JARVIS iPhone Edition — Quick install
+
+1) Publish this folder to a free HTTPS static host. Easiest free route:
+   GitHub Pages. Follow README.md.
+2) Open the published HTTPS URL in Safari on your iPhone 17.
+3) Share -> Add to Home Screen.
+4) Enable Open as Web App -> Add.
+5) Launch JARVIS from your Home Screen.
+
+This is an installable PWA, not an App Store native app.
+The app has offline local features; full AI answers require opening ChatGPT separately.
